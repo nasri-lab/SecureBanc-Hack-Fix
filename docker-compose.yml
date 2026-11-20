@@ -1,0 +1,39 @@
+services:
+  fraud:
+    build: ./fraud-service
+    ports:
+      - "127.0.0.1:8081:8081"
+
+  # Service interne « métadonnées » — cible du SSRF (atelier SSRF-1). Aucun port publié :
+  # joignable seulement depuis l'API, pas depuis le poste.
+  metadata:
+    build: ./metadata
+
+  # 💀 Site « pirate » — collecteur de tokens pour l'atelier A05-5 (XSS -> vol de token).
+  # Page de démonstration qui LISTE les tokens exfiltrés. Hors scénario d'attaque, il n'existe pas.
+  # Le navigateur de la victime doit résoudre « hackerwebsite » : ajoutez « 127.0.0.1 hackerwebsite »
+  # à votre fichier hosts. Si le port 80 est déjà pris, changez le mapping (ex. "127.0.0.1:8090:80").
+  hackerwebsite:
+    build: ./hacker-website
+    ports:
+      - "127.0.0.1:80:80"
+
+  api:
+    build: ./api
+    # Base H2 embarquée en mémoire dans l'API (voir application.properties) :
+    # chaque redémarrage du conteneur api repart d'une base neuve.
+    environment:
+      FRAUD_URL: http://fraud:8081
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      fraud:
+        condition: service_started
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      - api

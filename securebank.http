@@ -1,0 +1,28 @@
+@api = http://localhost:8080
+
+### Connexion d'Alice — exécutez, puis réutilisez le jeton
+# @name loginAlice
+POST {{api}}/api/auth/login
+Content-Type: application/json
+
+{ "username": "alice", "password": "alice123" }
+
+@fraud = http://localhost:8081
+
+### A06-1 · montant négatif
+POST {{api}}/api/transfers
+Authorization: Bearer {{loginAlice.response.body.token}}
+Content-Type: application/json
+
+{ "fromAccountId": 1, "toIban": "MA64SBNK0000000002", "amount": -500, "memo": "test" }
+
+### A06-1 · frais négatifs
+POST {{api}}/api/transfers
+Authorization: Bearer {{loginAlice.response.body.token}}
+Content-Type: application/json
+
+{ "fromAccountId": 1, "toIban": "MA64SBNK0000000002", "amount": 100, "fee": -1000, "memo": "test" }
+
+### Vérifier le solde
+GET {{api}}/api/me
+Authorization: Bearer {{loginAlice.response.body.token}}
