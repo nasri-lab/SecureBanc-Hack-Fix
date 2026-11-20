@@ -13,4 +13,5 @@ build/
 
 # IDE / OS
 .idea/
+.vscode/
 .DS_Store
