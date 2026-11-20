@@ -1,0 +1,16 @@
+# Build
+**/target/
+**/node_modules/
+dist/
+build/
+
+# Secrets et environnement
+.env
+
+# Données locales
+/data/
+*.log
+
+# IDE / OS
+.idea/
+.DS_Store
