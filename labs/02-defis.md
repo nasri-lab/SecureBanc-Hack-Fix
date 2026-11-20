@@ -208,4 +208,4 @@ Après reconnexion, Alice est `ADMIN`.
 
 Les corrections, les preuves et les bonnes pratiques de ces sept défis, ainsi que les **24 autres ateliers**, sont traités dans la **formation complète** : voir la [carte des ateliers](README.md).
 
-Vous avez trouvé une correction élégante ? Partagez-la en commentaire de mes posts **« Hack and Fix en 60 secondes »** sur [LinkedIn](https://www.linkedin.com/in/mohammednasri).
+Vous avez trouvé une correction ? Envoyez-la-moi sur [LinkedIn](https://www.linkedin.com/in/mohammednasri).
